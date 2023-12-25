@@ -2,4 +2,4 @@
 
 ## React Fund Project
 
-[Link:](https://react-fund-swilsakov.netlify.app/)
+[Link](https://react-fund-swilsakov.netlify.app/)
