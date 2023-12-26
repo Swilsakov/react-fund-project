@@ -1,6 +1,12 @@
 import { type ReactNode } from "react";
 import styled from "styled-components";
 
+const RootLayoutWrapper = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  background: no-repeat url("/ellipse1.png");
+`;
+
 const RootLayoutContainer = styled.div`
   margin: 0 auto;
   max-width: 1180px;
@@ -20,9 +26,11 @@ interface RootLayoutProps {
 
 const RootLayout = ({ children }: RootLayoutProps) => {
   return (
-    <RootLayoutContainer>
-      <RootLayoutContent>{children}</RootLayoutContent>
-    </RootLayoutContainer>
+    <RootLayoutWrapper>
+      <RootLayoutContainer>
+        <RootLayoutContent>{children}</RootLayoutContent>
+      </RootLayoutContainer>
+    </RootLayoutWrapper>
   );
 };
 
