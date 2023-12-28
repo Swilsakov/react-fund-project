@@ -3,8 +3,9 @@
 * {
   margin: 0px;
   padding: 0px;
-  border: 0px;
   box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  color: #ffffff;
 }
 
 html,
@@ -12,9 +13,9 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-
   background-color: #01091e;
+}
 
-  color: #ffffff;
-  font-family: "Montserrat", sans-serif;
+ul {
+  list-style: none;
 }
