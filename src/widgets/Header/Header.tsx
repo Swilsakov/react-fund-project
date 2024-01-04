@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { Typography } from "@/shared/ui/Typography";
+import { TypographyUI } from "@/shared/ui/Typography";
 import { CurrentTime } from "@/features";
-import { ButtonUI } from "@/shared/ui/Button/Button";
+import { ButtonUI } from "@/shared/ui/Button";
 import { Logo, WalletIcon } from "@/assets/icons";
+import { useState } from "react";
+
 const HeaderWrapper = styled.header`
+  width: 100%;
   height: 60px;
   padding: auto 24px;
 
@@ -29,18 +32,36 @@ const MenuItem = styled.li`
 `;
 
 const Header = () => {
+  const [content, setContent] = useState("");
+
+  const handleClick = (type: string) => {
+    setContent(type);
+  };
+
   return (
     <HeaderWrapper>
       <LogoBlock>
         <Logo />
-        <Typography.H4>React Fund</Typography.H4>
+        <TypographyUI.H4>React Fund</TypographyUI.H4>
       </LogoBlock>
+      {content}
       <MenuList>
         <MenuItem>
-          <ButtonUI img={<WalletIcon />}>Connect Wallet</ButtonUI>
+          <CurrentTime />
         </MenuItem>
         <MenuItem>
-          <CurrentTime />
+          <ButtonUI
+            onClick={() => handleClick("Connected")}
+            img={<WalletIcon />}
+          >
+            Connect Wallet
+          </ButtonUI>
+          <ButtonUI
+            onClick={() => handleClick("Disconnected")}
+            img={<WalletIcon />}
+          >
+            Disconnect Wallet
+          </ButtonUI>
         </MenuItem>
       </MenuList>
     </HeaderWrapper>

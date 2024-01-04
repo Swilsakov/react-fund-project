@@ -1,1 +1,1 @@
-export { Typography } from "./Typography";
+export { TypographyUI } from "./Typography";

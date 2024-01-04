@@ -8,7 +8,7 @@ interface TextProps {
   className?: string;
 }
 
-interface TypographyProps {
+interface TypographyUIProps {
   H1: typeof H1;
   H2: typeof H2;
   H3: typeof H3;
@@ -59,7 +59,7 @@ function Span(props: TextProps) {
   return <span className={cn(styles.span, className)}>{children}</span>;
 }
 
-export const Typography: TypographyProps = {
+export const TypographyUI: TypographyUIProps = {
   H1,
   H2,
   H3,
