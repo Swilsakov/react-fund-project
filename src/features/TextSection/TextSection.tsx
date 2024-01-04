@@ -11,7 +11,7 @@ const StyledTextSection = styled.section`
   gap: 12px;
 `;
 
-const TextSection = () => {
+export const TextSection = () => {
   const [contentType, setContentType] = useState("");
   const handleClick = (type: string) => {
     setContentType(type);
@@ -47,5 +47,3 @@ const TextSection = () => {
     </StyledTextSection>
   );
 };
-
-export default TextSection;
