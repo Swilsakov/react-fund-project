@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import styled from "styled-components";
 
-const RootLayoutWrapper = styled.main`
+const RootLayoutWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
   background: no-repeat url("/ellipse1.png");
