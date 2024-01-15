@@ -9,6 +9,7 @@ interface ButtonUIProps {
   img?: ReactNode;
   onClick?: () => void;
   isActive?: boolean;
+  disabled?: boolean;
 }
 
 export const ButtonUI = ({
@@ -16,6 +17,7 @@ export const ButtonUI = ({
   img,
   onClick,
   isActive,
+  disabled,
 }: ButtonUIProps) => {
   return (
     <Button
@@ -24,6 +26,7 @@ export const ButtonUI = ({
       startIcon={img}
       onClick={onClick}
       color={!isActive ? "primary" : "secondary"}
+      disabled={disabled}
     >
       <TypographyUI.Span>{children}</TypographyUI.Span>
     </Button>
