@@ -8,15 +8,25 @@ interface ButtonUIProps {
   children: ReactNode;
   img?: ReactNode;
   onClick?: () => void;
+  isActive?: boolean;
+  disabled?: boolean;
 }
 
-export const ButtonUI = ({ children, img, onClick }: ButtonUIProps) => {
+export const ButtonUI = ({
+  children,
+  img,
+  onClick,
+  isActive,
+  disabled,
+}: ButtonUIProps) => {
   return (
     <Button
       variant="contained"
       className={styles.btn}
       startIcon={img}
       onClick={onClick}
+      color={!isActive ? "primary" : "secondary"}
+      disabled={disabled}
     >
       <TypographyUI.Span>{children}</TypographyUI.Span>
     </Button>

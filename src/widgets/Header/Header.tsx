@@ -32,10 +32,14 @@ const MenuItem = styled.li`
 `;
 
 const Header = () => {
-  const [content, setContent] = useState("");
+  const [isConnectWallet, setIsConnectWallet] = useState(false);
 
-  const handleClick = (type: string) => {
-    setContent(type);
+  const handleConnect = () => {
+    setIsConnectWallet(true);
+  };
+
+  const handleDisconnect = () => {
+    setIsConnectWallet(false);
   };
 
   return (
@@ -44,24 +48,24 @@ const Header = () => {
         <Logo />
         <TypographyUI.H4>React Fund</TypographyUI.H4>
       </LogoBlock>
-      {content}
       <MenuList>
         <MenuItem>
           <CurrentTime />
         </MenuItem>
+
+        {isConnectWallet && <>0x42dED9d615328665b04918D0eAb2D1ED57e473b1</>}
+
         <MenuItem>
-          <ButtonUI
-            onClick={() => handleClick("Connected")}
-            img={<WalletIcon />}
-          >
-            Connect Wallet
-          </ButtonUI>
-          <ButtonUI
-            onClick={() => handleClick("Disconnected")}
-            img={<WalletIcon />}
-          >
-            Disconnect Wallet
-          </ButtonUI>
+          {!isConnectWallet && (
+            <ButtonUI onClick={() => handleConnect()} img={<WalletIcon />}>
+              Connect Wallet
+            </ButtonUI>
+          )}
+          {isConnectWallet && (
+            <ButtonUI onClick={() => handleDisconnect()} img={<WalletIcon />}>
+              Disconnect Wallet
+            </ButtonUI>
+          )}
         </MenuItem>
       </MenuList>
     </HeaderWrapper>
