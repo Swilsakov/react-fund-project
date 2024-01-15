@@ -15,18 +15,16 @@ interface ButtonUIProps {
 export const ButtonUI = ({
   children,
   img,
-  onClick,
   isActive,
-  disabled,
+  ...props
 }: ButtonUIProps) => {
   return (
     <Button
       variant="contained"
       className={styles.btn}
-      startIcon={img}
-      onClick={onClick}
       color={!isActive ? "primary" : "secondary"}
-      disabled={disabled}
+      startIcon={img}
+      {...props}
     >
       <TypographyUI.Span>{children}</TypographyUI.Span>
     </Button>
