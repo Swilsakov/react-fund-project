@@ -10,19 +10,22 @@ const FeedbackSectionContainer = styled.section``;
 export const FeedbackSection = () => {
   const [username, setUsername] = useState("");
   const [age, setAge] = useState<number | undefined>(undefined);
-  const [hasUsernameError, setHasUsernameError] = useState(false);
-  const [hasAgeError, setHasAgeError] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [reason, setReason] = useState("help");
 
   const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
-    setHasUsernameError(e.target.value.trim().length === 0);
+    setHasError(e.target.value.trim().length === 0);
   };
 
   const onChangeAge = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10) || undefined;
     setAge(value);
-    setHasAgeError(e.target.value.trim().length === 0);
+    setHasError(e.target.value.trim().length === 0);
+  };
+
+  const toggleError = () => {
+    setHasError((prev) => !prev);
   };
 
   const onChangeReason = (selectedValue: string) => {
@@ -32,19 +35,20 @@ export const FeedbackSection = () => {
   return (
     <FeedbackSectionContainer>
       <TypographyUI.H3>Feedback:</TypographyUI.H3>
+      <ButtonUI onClick={toggleError}>Toggle error</ButtonUI>
       <form action="submit">
         <TextfieldUI
           label={"Username"}
           value={username}
           onChange={onChangeUsername}
-          error={hasUsernameError}
+          error={hasError}
         />
         <TextfieldUI
           label={"Age"}
           value={age}
           type="number"
           onChange={onChangeAge}
-          error={hasAgeError}
+          error={hasError}
         />
         <SelectUI
           id={"reason"}
@@ -53,7 +57,11 @@ export const FeedbackSection = () => {
           onChange={onChangeReason}
           options={options}
         />
-        <ButtonUI disabled={hasUsernameError && hasAgeError}>Send</ButtonUI>
+        <ButtonUI
+          disabled={hasError || !username || age === undefined || !reason}
+        >
+          Send
+        </ButtonUI>
 
         <pre>
           Name: {username}
