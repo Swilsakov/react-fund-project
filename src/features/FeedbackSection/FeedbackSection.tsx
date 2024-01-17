@@ -5,31 +5,58 @@ import { SelectUI } from "@/shared/ui/Select";
 import { ButtonUI } from "@/shared/ui/Button";
 import { useState } from "react";
 
+type FormType = {
+  username?: string;
+  age?: number | undefined;
+  hasError?: boolean;
+  reason?: string;
+};
 const FeedbackSectionContainer = styled.section``;
 
 export const FeedbackSection = () => {
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState<number | undefined>(undefined);
-  const [hasError, setHasError] = useState(false);
-  const [reason, setReason] = useState("help");
+  // const [username, setUsername] = useState("");
+  // const [age, setAge] = useState<number | undefined>(undefined);
+  // const [hasError, setHasError] = useState(false);
+  // const [reason, setReason] = useState("help");
+
+  const [form, setForm] = useState<FormType>({
+    username: "",
+    age: undefined,
+    hasError: false,
+    reason: "help",
+  });
 
   const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-    setHasError(e.target.value.trim().length === 0);
+    // setUsername(e.target.value);
+    // setHasError(e.target.value.trim().length === 0);
+    setForm((prev) => ({
+      ...prev,
+      username: e.target.value,
+      hasError: e.target.value.trim().length === 0,
+    }));
   };
 
   const onChangeAge = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10) || undefined;
-    setAge(value);
-    setHasError(e.target.value.trim().length === 0);
+    // setAge(value);
+    // setHasError(e.target.value.trim().length === 0);
+    setForm((prev) => ({
+      ...prev,
+      age: value,
+      hasError: e.target.value.trim().length === 0,
+    }));
   };
 
   const toggleError = () => {
-    setHasError((prev) => !prev);
+    // setHasError((prev) => !prev);
   };
 
   const onChangeReason = (selectedValue: string) => {
-    setReason(selectedValue);
+    // setReason(selectedValue);
+    setForm((prev) => ({
+      ...prev,
+      reason: selectedValue,
+    }));
   };
 
   return (
@@ -39,38 +66,36 @@ export const FeedbackSection = () => {
       <form action="submit">
         <TextfieldUI
           label={"Username"}
-          value={username}
+          value={form.username}
           onChange={onChangeUsername}
-          error={hasError}
+          error={form.hasError}
         />
         <TextfieldUI
           label={"Age"}
-          value={age}
+          value={form.age}
           type="number"
           onChange={onChangeAge}
-          error={hasError}
+          error={form.hasError}
         />
         <SelectUI
           id={"reason"}
           label={"Reason"}
-          value={reason}
+          value={form.reason}
           onChange={onChangeReason}
           options={options}
         />
         <ButtonUI
-          disabled={hasError || !username || age === undefined || !reason}
+          disabled={
+            form.hasError ||
+            !form.username ||
+            form.age === undefined ||
+            !form.reason
+          }
         >
           Send
         </ButtonUI>
 
-        <pre>
-          Name: {username}
-          <br />
-          Age: {age}
-          <br />
-          Reason: {reason}
-          <br />
-        </pre>
+        <pre>{JSON.stringify(form, null, 2)}</pre>
       </form>
     </FeedbackSectionContainer>
   );
