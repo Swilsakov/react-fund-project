@@ -3,8 +3,35 @@ import { TextfieldUI } from "@/shared/ui/Textfield";
 import { TypographyUI } from "@/shared/ui/Typography";
 import { SelectUI } from "@/shared/ui/Select";
 import { ButtonUI } from "@/shared/ui/Button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
+const StateVsRef = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [show, setShow] = useState(false);
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter") {
+      setShow(true);
+    }
+  };
+
+  console.log(inputRef);
+
+  return (
+    <div>
+      <p>{inputRef.current?.value}</p>
+      <p>{show && inputRef.current?.value}</p>
+      <input
+        ref={inputRef}
+        type="text"
+        onKeyDown={handleKeyDown}
+        style={{ color: "#000" }}
+      />
+    </div>
+  );
+};
 type FormType = {
   username?: string;
   age?: number | undefined;
@@ -97,6 +124,7 @@ export const FeedbackSection = () => {
 
         <pre>{JSON.stringify(form, null, 2)}</pre>
       </form>
+      <StateVsRef />
     </FeedbackSectionContainer>
   );
 };
