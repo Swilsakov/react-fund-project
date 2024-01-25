@@ -76,6 +76,10 @@ export const FeedbackSection = () => {
 
   const toggleError = () => {
     // setHasError((prev) => !prev);
+    setForm((prev) => ({
+      ...prev,
+      hasError: !prev.hasError,
+    }));
   };
 
   const onChangeReason = (selectedValue: string) => {

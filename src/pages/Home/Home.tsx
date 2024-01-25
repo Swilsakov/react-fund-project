@@ -3,10 +3,12 @@ import {
   TabsSection,
   TextSection,
   WalletSection,
+  EffectSection,
 } from "@/features";
 import Header from "@/widgets/Header/Header";
 import { useState } from "react";
 import styled from "styled-components";
+import { type TabType } from "./type";
 
 const StyledHomePageMain = styled.main`
   display: flex;
@@ -14,7 +16,7 @@ const StyledHomePageMain = styled.main`
 `;
 
 export const Home = () => {
-  const [tab, setTab] = useState("main");
+  const [tab, setTab] = useState<TabType>("main");
 
   return (
     <>
@@ -29,6 +31,7 @@ export const Home = () => {
         {tab === "main" && <TextSection />}
         {tab === "feedback" && <FeedbackSection />}
         {tab === "wallet" && <WalletSection />}
+        {tab === "effect" && <EffectSection />}
       </StyledHomePageMain>
     </>
   );
