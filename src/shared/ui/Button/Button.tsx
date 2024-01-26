@@ -10,6 +10,7 @@ interface ButtonUIProps {
   onClick?: () => void;
   isActive?: boolean;
   disabled?: boolean;
+  style?: React.CSSProperties;
 }
 
 export const ButtonUI = ({
