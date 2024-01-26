@@ -6,3 +6,6 @@
   font-family: "Montserrat", sans-serif;
   text-transform: none !important;
 }
+.btn:disabled {
+  cursor: not-allowed;
+}

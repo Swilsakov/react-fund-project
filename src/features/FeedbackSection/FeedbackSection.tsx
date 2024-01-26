@@ -3,67 +3,132 @@ import { TextfieldUI } from "@/shared/ui/Textfield";
 import { TypographyUI } from "@/shared/ui/Typography";
 import { SelectUI } from "@/shared/ui/Select";
 import { ButtonUI } from "@/shared/ui/Button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
+const StateVsRef = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [show, setShow] = useState(false);
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter") {
+      setShow(true);
+    }
+  };
+
+  console.log(inputRef);
+
+  return (
+    <div>
+      <p>{inputRef.current?.value}</p>
+      <p>{show && inputRef.current?.value}</p>
+      <input
+        ref={inputRef}
+        type="text"
+        onKeyDown={handleKeyDown}
+        style={{ color: "#000" }}
+      />
+    </div>
+  );
+};
+type FormType = {
+  username?: string;
+  age?: number | undefined;
+  hasError?: boolean;
+  reason?: string;
+};
 const FeedbackSectionContainer = styled.section``;
 
 export const FeedbackSection = () => {
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState<number | undefined>(undefined);
-  const [hasUsernameError, setHasUsernameError] = useState(false);
-  const [hasAgeError, setHasAgeError] = useState(false);
-  const [reason, setReason] = useState("help");
+  // const [username, setUsername] = useState("");
+  // const [age, setAge] = useState<number | undefined>(undefined);
+  // const [hasError, setHasError] = useState(false);
+  // const [reason, setReason] = useState("help");
+
+  const [form, setForm] = useState<FormType>({
+    username: "",
+    age: undefined,
+    hasError: false,
+    reason: "help",
+  });
 
   const onChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-    setHasUsernameError(e.target.value.trim().length === 0);
+    // setUsername(e.target.value);
+    // setHasError(e.target.value.trim().length === 0);
+    setForm((prev) => ({
+      ...prev,
+      username: e.target.value,
+      hasError: e.target.value.trim().length === 0,
+    }));
   };
 
   const onChangeAge = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value, 10) || undefined;
-    setAge(value);
-    setHasAgeError(e.target.value.trim().length === 0);
+    // setAge(value);
+    // setHasError(e.target.value.trim().length === 0);
+    setForm((prev) => ({
+      ...prev,
+      age: value,
+      hasError: e.target.value.trim().length === 0,
+    }));
+  };
+
+  const toggleError = () => {
+    // setHasError((prev) => !prev);
+    setForm((prev) => ({
+      ...prev,
+      hasError: !prev.hasError,
+    }));
   };
 
   const onChangeReason = (selectedValue: string) => {
-    setReason(selectedValue);
+    // setReason(selectedValue);
+    setForm((prev) => ({
+      ...prev,
+      reason: selectedValue,
+    }));
   };
 
   return (
     <FeedbackSectionContainer>
       <TypographyUI.H3>Feedback:</TypographyUI.H3>
+      <ButtonUI onClick={toggleError}>Toggle error</ButtonUI>
       <form action="submit">
         <TextfieldUI
           label={"Username"}
-          value={username}
+          value={form.username}
           onChange={onChangeUsername}
-          error={hasUsernameError}
+          error={form.hasError}
         />
         <TextfieldUI
           label={"Age"}
-          value={age}
+          value={form.age}
           type="number"
           onChange={onChangeAge}
-          error={hasAgeError}
+          error={form.hasError}
         />
         <SelectUI
           id={"reason"}
           label={"Reason"}
-          value={reason}
+          value={form.reason}
           onChange={onChangeReason}
           options={options}
         />
-        <ButtonUI disabled={hasUsernameError && hasAgeError}>Send</ButtonUI>
+        <ButtonUI
+          disabled={
+            form.hasError ||
+            !form.username ||
+            form.age === undefined ||
+            !form.reason
+          }
+        >
+          Send
+        </ButtonUI>
 
-        <pre>
-          Name: {username}
-          <br />
-          Age: {age}
-          <br />
-          Reason: {reason}
-          <br />
-        </pre>
+        <pre>{JSON.stringify(form, null, 2)}</pre>
       </form>
+      <StateVsRef />
     </FeedbackSectionContainer>
   );
 };

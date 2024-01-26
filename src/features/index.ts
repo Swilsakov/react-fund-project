@@ -1,3 +1,4 @@
+export { EffectSection } from "./EffectSection/EffectSection";
 export { WalletSection } from "./WalletSection/WalletSection";
 export { CurrentTime } from "./CurrentTime/CurrentTime";
 export { TextSection } from "./TextSection/TextSection";

@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const CurrentTime = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  setInterval(() => {
-    setCurrentTime(new Date());
-  }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentTime]);
 
   return <span>{currentTime.toLocaleTimeString()}</span>;
 };
